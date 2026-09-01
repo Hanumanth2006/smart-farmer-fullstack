@@ -1,0 +1,329 @@
+@media (max-width: 900px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .feature-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .crop-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-content h1 {
+        font-size: 40px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 15px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .nav-buttons {
+        display: none;
+    }
+
+    .feature-container {
+        grid-template-columns: 1fr;
+    }
+
+    .crop-container {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        min-height: 500px;
+    }
+
+    .hero-content {
+        margin: 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .hero-content p {
+        font-size: 16px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        width: 180px;
+    }
+}
+/* Crops Responsive */
+
+@media (max-width: 900px) {
+
+    .market-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .crop-tools {
+        flex-direction: column;
+    }
+
+    .crop-tools select {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .market-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .crop-heading h1 {
+        font-size: 30px;
+    }
+
+    .crop-heading p {
+        font-size: 16px;
+    }
+}
+/* Product Details Responsive */
+
+@media (max-width: 800px) {
+
+    .product-container {
+        grid-template-columns: 1fr;
+
+        padding: 25px;
+    }
+
+    .product-image {
+        min-height: 300px;
+
+        font-size: 120px;
+    }
+
+    .product-info h1 {
+        font-size: 32px;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .product-buttons {
+        flex-direction: column;
+    }
+
+    .product-details {
+        padding: 30px 15px;
+    }
+
+    .product-container {
+        padding: 20px;
+    }
+}
+/* Cart Responsive */
+
+@media (max-width: 700px) {
+
+    .cart-item {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .cart-summary {
+        text-align: center;
+    }
+
+    .cart-section {
+        padding: 40px 15px;
+    }
+}
+/* Farmer Dashboard Responsive */
+
+@media (max-width: 900px) {
+
+    .dashboard-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-title {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .crop-form input,
+    .crop-form select {
+        width: 100%;
+
+        margin: 5px 0;
+    }
+
+}
+/* Market Prices Responsive */
+
+@media (max-width: 700px) {
+
+    .price-tools {
+        flex-direction: column;
+    }
+
+    .price-tools select {
+        width: 100%;
+    }
+
+    .price-heading h1 {
+        font-size: 30px;
+    }
+
+    .price-info {
+        grid-template-columns: 1fr;
+    }
+
+}
+/* About & Contact Responsive */
+
+@media (max-width: 800px) {
+
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contact-section {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-hero h1,
+    .contact-heading h1 {
+        font-size: 30px;
+    }
+
+}
+/* ===============================
+   HOMEPAGE MOBILE
+================================ */
+
+@media (max-width: 900px) {
+
+    .navbar {
+        flex-wrap: wrap;
+
+        gap: 15px;
+    }
+
+    .nav-links {
+        order: 3;
+
+        width: 100%;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+    }
+
+    .feature-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .crop-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .nav-links {
+        gap: 12px;
+
+        font-size: 14px;
+    }
+
+    .nav-buttons {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .hero {
+        min-height: 450px;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+
+        align-items: center;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        width: 200px;
+    }
+
+    .feature-container {
+        grid-template-columns: 1fr;
+    }
+
+    .crop-container {
+        grid-template-columns: 1fr;
+    }
+
+    .features h2,
+    .popular-crops h2 {
+        font-size: 28px;
+    }
+
+}

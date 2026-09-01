@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Smart Farmer</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+
+            <div class="logo">
+                🌾 Smart Farmer
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="market-prices.html">Market Prices</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+        </nav>
+    </header>
+
+
+    <!-- Login Section -->
+    <section class="login-section">
+
+        <div class="login-box">
+
+            <h2>Welcome Back 🌾</h2>
+
+            <p>Login to your Smart Farmer account</p>
+
+            <form onsubmit="loginUser(event)">
+
+                <label>Email</label>
+                <input
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label>Password</label>
+                <input
+                    type="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <div class="user-type">
+
+                    <label>
+                        <input type="radio" name="user" value="farmer">
+                        👨‍🌾 Farmer
+                    </label>
+
+                    <label>
+                        <input type="radio" name="user" value="buyer">
+                        🛒 Buyer
+                    </label>
+
+                </div>
+
+                <button type="submit" class="login-submit">
+    Login
+</button>
+
+            </form>
+
+            <p class="register-text">
+                Don't have an account?
+                <a href="register.html">Register Now</a>
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="footer-content">
+
+            <h3>🌾 Smart Farmer</h3>
+
+            <p>Empowering farmers through digital connections.</p>
+
+            <p>© 2026 Smart Farmer. All Rights Reserved.</p>
+
+        </div>
+
+    </footer>
+
+</body>
+
+</html>

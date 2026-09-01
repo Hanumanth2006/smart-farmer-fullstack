@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Farmer Dashboard - Smart Farmer</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+
+            <div class="logo">
+                🌾 Smart Farmer
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="farmer-dashboard.html">Dashboard</a></li>
+            </ul>
+
+            <div class="nav-buttons">
+                <a href="login.html" class="login-btn">Logout</a>
+            </div>
+
+        </nav>
+    </header>
+
+
+    <!-- Dashboard Header -->
+    <section class="dashboard-header">
+
+        <h1>👨‍🌾 Farmer Dashboard</h1>
+
+        <p>
+            Welcome back, Farmer Ramesh!
+        </p>
+
+    </section>
+
+
+    <!-- Dashboard Statistics -->
+    <section class="dashboard-stats">
+
+        <div class="stat-card">
+            <div class="stat-icon">🌾</div>
+            <h2>6</h2>
+            <p>Total Crops</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <h2>24</h2>
+            <p>Total Orders</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <h2>₹48,500</h2>
+            <p>Total Sales</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <h2>4.8</h2>
+            <p>Farmer Rating</p>
+        </div>
+
+    </section>
+
+
+    <!-- Add Crop -->
+    <section class="add-crop-section">
+
+        <div class="dashboard-title">
+
+            <h2>My Crops</h2>
+
+            <button
+                class="add-crop-btn"
+                onclick="showCropForm()"
+            >
+                + Add New Crop
+            </button>
+
+        </div>
+
+
+        <!-- Add Crop Form -->
+        <div
+            id="cropForm"
+            class="crop-form"
+            style="display: none;"
+        >
+
+            <h3>Add New Crop</h3>
+
+            <input
+                type="text"
+                id="newCropName"
+                placeholder="Crop name"
+            >
+
+            <input
+                type="number"
+                id="newCropPrice"
+                placeholder="Price per Quintal"
+            >
+
+            <input
+                type="number"
+                id="newCropQuantity"
+                placeholder="Available quantity"
+            >
+
+            <select id="newCropCategory">
+
+                <option value="">
+                    Select Category
+                </option>
+
+                <option value="grains">
+                    Grains
+                </option>
+
+                <option value="vegetables">
+                    Vegetables
+                </option>
+
+                <option value="fruits">
+                    Fruits
+                </option>
+
+                <option value="spices">
+                    Spices
+                </option>
+
+            </select>
+
+            <button
+                class="save-crop-btn"
+                onclick="addFarmerCrop()"
+            >
+                Save Crop
+            </button>
+
+        </div>
+
+
+        <!-- Crop Table -->
+        <div class="crop-table-container">
+
+            <table class="crop-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Crop</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>🌾 Rice</td>
+                        <td>Grains</td>
+                        <td>₹2,500</td>
+                        <td>50 Quintals</td>
+                        <td>
+                            <span class="available">
+                                Available
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>🌽 Maize</td>
+                        <td>Grains</td>
+                        <td>₹2,100</td>
+                        <td>30 Quintals</td>
+                        <td>
+                            <span class="available">
+                                Available
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>🌶️ Chilli</td>
+                        <td>Spices</td>
+                        <td>₹8,000</td>
+                        <td>20 Quintals</td>
+                        <td>
+                            <span class="available">
+                                Available
+                            </span>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- Recent Orders -->
+    <section class="orders-section">
+
+        <h2>📦 Recent Orders</h2>
+
+        <div class="orders-table-container">
+
+            <table class="orders-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Crop</th>
+                        <th>Buyer</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>#SF1001</td>
+                        <td>Rice</td>
+                        <td>Rahul</td>
+                        <td>5 Quintals</td>
+                        <td>₹12,500</td>
+                        <td>
+                            <span class="order-status">
+                                Completed
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>#SF1002</td>
+                        <td>Maize</td>
+                        <td>Arjun</td>
+                        <td>3 Quintals</td>
+                        <td>₹6,300</td>
+                        <td>
+                            <span class="pending-status">
+                                Pending
+                            </span>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <div class="footer-content">
+
+            <h3>🌾 Smart Farmer</h3>
+
+            <p>
+                Empowering farmers through digital connections.
+            </p>
+
+            <p>
+                © 2026 Smart Farmer. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="main.js"></script>
+
+</body>
+
+</html>

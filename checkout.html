@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout - Smart Farmer</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                🌾 Smart Farmer
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="crops.html">Crops</a></li>
+                <li><a href="cart.html">Cart 🛒</a></li>
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+    <section class="checkout-section">
+
+        <div class="checkout-box">
+
+            <h1>📦 Checkout</h1>
+
+            <form onsubmit="placeOrder(event)">
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    placeholder="Enter your name"
+                    required
+                >
+
+
+                <label>Phone Number</label>
+
+                <input
+                    type="tel"
+                    placeholder="Enter phone number"
+                    required
+                >
+
+
+                <label>Delivery Address</label>
+
+                <textarea
+                    placeholder="Enter your delivery address"
+                    required
+                ></textarea>
+
+
+                <label>Payment Method</label>
+
+                <select required>
+
+                    <option value="">
+                        Select Payment Method
+                    </option>
+
+                    <option>
+                        Cash on Delivery
+                    </option>
+
+                    <option>
+                        UPI
+                    </option>
+
+                    <option>
+                        Card
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="submit"
+                    class="place-order-btn"
+                >
+                    Place Order
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        <div class="footer-content">
+
+            <h3>🌾 Smart Farmer</h3>
+
+            <p>
+                Empowering farmers through digital connections.
+            </p>
+
+            <p>
+                © 2026 Smart Farmer. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="main.js"></script>
+
+</body>
+
+</html>

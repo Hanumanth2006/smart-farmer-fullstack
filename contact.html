@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Contact - Smart Farmer</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+                🌾 Smart Farmer
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="crops.html">Crops</a>
+                </li>
+
+                <li>
+                    <a href="market-prices.html">
+                        Market Prices
+                    </a>
+                </li>
+
+                <li>
+                    <a href="about.html">About</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">Contact</a>
+                </li>
+
+            </ul>
+
+            <div class="nav-buttons">
+
+                <a href="login.html" class="login-btn">
+                    Login
+                </a>
+
+                <a href="register.html" class="register-btn">
+                    Register
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- Contact Heading -->
+
+    <section class="contact-heading">
+
+        <h1>📞 Contact Us</h1>
+
+        <p>
+            Have a question? We would love to hear from you.
+        </p>
+
+    </section>
+
+
+    <!-- Contact Section -->
+
+    <section class="contact-section">
+
+        <div class="contact-info">
+
+            <h2>Get In Touch</h2>
+
+            <div class="contact-item">
+                <span>📧</span>
+
+                <div>
+                    <h3>Email</h3>
+                    <p>support@smartfarmer.com</p>
+                </div>
+            </div>
+
+
+            <div class="contact-item">
+                <span>📞</span>
+
+                <div>
+                    <h3>Phone</h3>
+                    <p>+91 98765 43210</p>
+                </div>
+            </div>
+
+
+            <div class="contact-item">
+                <span>📍</span>
+
+                <div>
+                    <h3>Location</h3>
+                    <p>India</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- Contact Form -->
+
+        <div class="contact-form">
+
+            <h2>Send Us a Message</h2>
+
+            <form onsubmit="submitContact(event)">
+
+                <label>Name</label>
+
+                <input
+                    type="text"
+                    id="contactName"
+                    placeholder="Enter your name"
+                    required
+                >
+
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="contactEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+
+                <label>Subject</label>
+
+                <input
+                    type="text"
+                    placeholder="Enter subject"
+                    required
+                >
+
+
+                <label>Message</label>
+
+                <textarea
+                    id="contactMessage"
+                    placeholder="Write your message..."
+                    required
+                ></textarea>
+
+
+                <button
+                    type="submit"
+                    class="send-message-btn"
+                >
+                    Send Message
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <h3>🌾 Smart Farmer</h3>
+
+            <p>
+                Empowering farmers through digital connections.
+            </p>
+
+            <p>
+                © 2026 Smart Farmer. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script src="main.js"></script>
+
+</body>
+
+</html>
