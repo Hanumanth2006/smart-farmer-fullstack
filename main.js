@@ -1153,7 +1153,7 @@ if (cropContainer) {
 
     // Get crops from backend
 
-    fetch("http://localhost:5000/api/crops")
+    fetch("https://smart-farmer-fullstack.onrender.com/api/crops")
 
         .then(function(response) {
             return response.json();
@@ -1865,7 +1865,7 @@ function addFarmerCrop() {
 
     }
 
-fetch("http://localhost:5000/api/crops", {
+fetch("https://smart-farmer-fullstack.onrender.com/api/crops", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
@@ -1925,7 +1925,7 @@ function loginUser(event) {
 
     const accountType = selectedUser.value;
 
-    fetch("http://localhost:5000/api/login", {
+    fetch("https://smart-farmer-fullstack.onrender.com/api/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -2196,7 +2196,7 @@ function registerUser(event) {
         return;
     }
 
-    fetch("http://localhost:5000/api/register", {
+    fetch("https://smart-farmer-fullstack.onrender.com/api/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -2271,7 +2271,7 @@ function loadFarmerCrops() {
     }
 
     fetch(
-    "http://localhost:5000/api/farmer-crops?email=" +
+    "https://smart-farmer-fullstack.onrender.com/api/farmer-crops?email=" +
     JSON.parse(sessionStorage.getItem("loggedInUser")).email
 )
         .then(response => response.json())
@@ -2323,7 +2323,7 @@ function removeFarmerCrop(cropName) {
         JSON.parse(sessionStorage.getItem("loggedInUser")).email;
 
     fetch(
-        "http://localhost:5000/api/crops/" +
+        "https://smart-farmer-fullstack.onrender.com/api/crops/" +
         encodeURIComponent(cropName) +
         "?email=" +
         encodeURIComponent(farmerEmail),
@@ -2355,7 +2355,7 @@ function loadBuyerCrops() {
         return;
     }
 
-    fetch("http://localhost:5000/api/crops")
+    fetch("https://smart-farmer-fullstack.onrender.com/api/crops")
         .then(response => response.json())
         .then(crops => {
 
@@ -2409,7 +2409,7 @@ function viewCropDetails(cropName) {
 }
 function addBuyerCropToCart(cropName) {
 
-    fetch("http://localhost:5000/api/crops")
+    fetch("https://smart-farmer-fullstack.onrender.com/api/crops")
         .then(response => response.json())
         .then(crops => {
 
