@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buyer Dashboard - Smart Farmer</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <nav class="navbar">
+
+            <div class="logo">
+                🌾 Smart Farmer
+            </div>
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+
+                <li>
+                    <a href="buyer-dashboard.html">Buyer Dashboard</a>
+                </li>
+
+                <li>
+                    <a href="crops.html">Crops</a>
+                </li>
+
+                <li>
+                    <a href="market-prices.html">Market Prices</a>
+                </li>
+
+                <li>
+                    <a href="about.html">About</a>
+                </li>
+
+                <li>
+                    <a href="contact.html">Contact</a>
+                </li>
+
+            </ul>
+
+            <div class="nav-buttons">
+                <a href="#" class="login-btn" onclick="logoutUser()">Logout</a>
+            </div>
+
+        </nav>
+    </header>
+
+
+    <!-- Buyer Dashboard -->
+    <section class="buyer-dashboard">
+
+        <div class="dashboard-content">
+
+            <span>🛒 BUYER DASHBOARD</span>
+
+            <h1>Welcome, Buyer! 👋</h1>
+
+            <p>
+                Discover fresh crops, connect with farmers,
+                and manage your purchases easily.
+            </p>
+
+        </div>
+
+    </section>
+    <section class="buyer-crops-section">
+
+    <div class="section-heading">
+        <span>🌾 AVAILABLE CROPS</span>
+        <h2>Fresh Crops from Farmers</h2>
+        <p>Browse crops currently available from farmers.</p>
+    </div>
+
+    <div id="buyerCropContainer" class="buyer-crop-container">
+        <p>Loading crops...</p>
+    </div>
+
+</section>
+
+
+    <script src="main.js"></script>
+
+</body>
+
+</html>

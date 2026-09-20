@@ -28,54 +28,11 @@
             </ul>
 
             <div class="nav-buttons">
-                <a href="login.html" class="login-btn">Logout</a>
+              <a href="#" class="login-btn" onclick="logoutUser()">Logout</a>  
             </div>
 
         </nav>
     </header>
-
-
-    <!-- Dashboard Header -->
-    <section class="dashboard-header">
-
-        <h1>👨‍🌾 Farmer Dashboard</h1>
-
-        <p>
-            Welcome back, Farmer Ramesh!
-        </p>
-
-    </section>
-
-
-    <!-- Dashboard Statistics -->
-    <section class="dashboard-stats">
-
-        <div class="stat-card">
-            <div class="stat-icon">🌾</div>
-            <h2>6</h2>
-            <p>Total Crops</p>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-icon">📦</div>
-            <h2>24</h2>
-            <p>Total Orders</p>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-icon">💰</div>
-            <h2>₹48,500</h2>
-            <p>Total Sales</p>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-icon">⭐</div>
-            <h2>4.8</h2>
-            <p>Farmer Rating</p>
-        </div>
-
-    </section>
-
 
     <!-- Add Crop -->
     <section class="add-crop-section">
@@ -172,104 +129,14 @@
 
                 </thead>
 
-                <tbody>
+               <tbody id="farmerCropTable">
+    <tr>
+        <td colspan="5" style="text-align: center; padding: 30px;">
+            🌱 No crops added yet
+        </td>
+    </tr>
+</tbody>
 
-                    <tr>
-                        <td>🌾 Rice</td>
-                        <td>Grains</td>
-                        <td>₹2,500</td>
-                        <td>50 Quintals</td>
-                        <td>
-                            <span class="available">
-                                Available
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>🌽 Maize</td>
-                        <td>Grains</td>
-                        <td>₹2,100</td>
-                        <td>30 Quintals</td>
-                        <td>
-                            <span class="available">
-                                Available
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>🌶️ Chilli</td>
-                        <td>Spices</td>
-                        <td>₹8,000</td>
-                        <td>20 Quintals</td>
-                        <td>
-                            <span class="available">
-                                Available
-                            </span>
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-
-    <!-- Recent Orders -->
-    <section class="orders-section">
-
-        <h2>📦 Recent Orders</h2>
-
-        <div class="orders-table-container">
-
-            <table class="orders-table">
-
-                <thead>
-
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Crop</th>
-                        <th>Buyer</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    <tr>
-                        <td>#SF1001</td>
-                        <td>Rice</td>
-                        <td>Rahul</td>
-                        <td>5 Quintals</td>
-                        <td>₹12,500</td>
-                        <td>
-                            <span class="order-status">
-                                Completed
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>#SF1002</td>
-                        <td>Maize</td>
-                        <td>Arjun</td>
-                        <td>3 Quintals</td>
-                        <td>₹6,300</td>
-                        <td>
-                            <span class="pending-status">
-                                Pending
-                            </span>
-                        </td>
-                    </tr>
-
-                </tbody>
 
             </table>
 

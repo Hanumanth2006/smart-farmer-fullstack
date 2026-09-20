@@ -1,3 +1,14 @@
+/* Mobile width fix */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
 @media (max-width: 900px) {
 
     .nav-links {
@@ -326,4 +337,121 @@
         font-size: 28px;
     }
 
+}
+/* ===== Smart Farmer Mobile Design ===== */
+
+@media (max-width: 768px) {
+
+    /* Hero */
+    .hero {
+        padding: 50px 6%;
+        min-height: auto;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 45px;
+    }
+
+    .hero-text {
+        max-width: 100%;
+    }
+
+    .hero-text h1 {
+        font-size: 42px;
+        white-space: normal !important;
+    }
+
+    .hero-text p {
+        font-size: 16px;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .hero-visual {
+        width: 320px;
+        height: 320px;
+    }
+
+    .farm-circle {
+        width: 220px;
+        height: 220px;
+        font-size: 90px;
+    }
+
+    .floating-card {
+        font-size: 13px;
+        padding: 10px 14px;
+    }
+
+    /* Why Smart Farmer */
+    .why-smart-farmer {
+        padding: 65px 6%;
+    }
+
+    .section-heading h2 {
+        font-size: 32px;
+    }
+
+    .section-heading p {
+        font-size: 16px;
+    }
+
+    .feature-cards {
+        grid-template-columns: 1fr;
+    }
+
+    /* How It Works */
+    .how-it-works {
+        padding: 65px 6%;
+    }
+
+    .steps-container {
+        flex-direction: column;
+    }
+
+    .step-line {
+        transform: rotate(90deg);
+    }
+
+    .step-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Future Section */
+    .future-section {
+        padding: 65px 6%;
+    }
+
+    .future-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 35px;
+    }
+
+    .future-icon {
+        width: 180px;
+        height: 180px;
+        font-size: 75px;
+    }
+
+    .future-text h2 {
+        font-size: 34px;
+    }
+
+    /* Impact */
+    .impact-section {
+        grid-template-columns: 1fr;
+        padding: 60px 6%;
+    }
+
+    /* Footer */
+    footer {
+        padding: 40px 6% 20px;
+    }
 }

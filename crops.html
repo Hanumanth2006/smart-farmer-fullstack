@@ -23,31 +23,41 @@
 
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="crops.html">Crops</a></li>
+<li id="farmerDashboardLink">
+    <a href="farmer-dashboard.html">Farmer Dashboard</a>
+</li>
+<li id="buyerDashboardLink">
+    <a href="buyer-dashboard.html">Buyer Dashboard</a>
+</li>
+<li><a href="crops.html">Crops</a></li>
                 <li><a href="market-prices.html">Market Prices</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
 
-            <div class="nav-buttons">
-                <a href="login.html" class="login-btn">Login</a>
-                <a href="register.html" class="register-btn">Register</a>
-            </div>
+          <div class="nav-buttons">
+    <a href="#" class="login-btn" onclick="logoutUser()">Logout</a>
+</div>
 
         </nav>
     </header>
 
 
     <!-- Page Heading -->
-    <section class="crop-heading">
+   <section class="crop-heading">
 
-        <h1>🌾 Fresh Crops Marketplace</h1>
+    <div class="crop-heading-content">
+        <span>🌱 SMART FARMER MARKETPLACE</span>
+
+        <h1>Fresh Crops, Directly<br>From Farmers 🌾</h1>
 
         <p>
-            Buy fresh agricultural products directly from farmers.
+            Discover fresh agricultural products and connect
+            with farmers from different regions.
         </p>
+    </div>
 
-    </section>
+</section>
 
 
     <!-- Search and Filter -->
@@ -128,8 +138,8 @@
     </footer>
 
 
-    <script src="main.js"></script>
+   <script src="main.js"></script>
+<script src="crops.js"></script>
 
 </body>
-
 </html>

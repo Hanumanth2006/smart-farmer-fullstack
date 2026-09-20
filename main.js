@@ -918,159 +918,348 @@ const cropDatabase = [
 
 
 // ======================================================
-// 2. DISPLAY CROPS
-// ======================================================
+// // 2. DISPLAY CROPS
+// // ======================================================
+
+// const cropContainer = document.getElementById("cropContainer");
+
+// function displayCrops(crops) {
+
+//     if (!cropContainer) {
+//         return;
+//     }
+
+//     cropContainer.innerHTML = "";
+
+//     if (crops.length === 0) {
+
+//         cropContainer.innerHTML = `
+//             <div class="no-crops">
+//                 <h2>😔 No crops found</h2>
+//                 <p>Try another crop name or category.</p>
+//             </div>
+//         `;
+
+//         return;
+//     }
+
+
+//     crops.forEach(function(crop) {
+
+//         const card = document.createElement("div");
+
+//         card.className = "market-card";
+
+//         card.dataset.category = crop.category;
+
+
+//         card.innerHTML = `
+
+//             <div class="market-image">
+//                 ${crop.icon}
+//             </div>
+
+//             <div class="market-info">
+
+//                 <span class="category">
+//                     ${crop.category}
+//                 </span>
+
+//                 <h2>${crop.name}</h2>
+
+//                 <p>
+//                     Fresh quality ${crop.name}
+//                     directly from farmers.
+//                 </p>
+
+//                 <p class="farmer">
+//                     👨‍🌾 Farmer: ${crop.farmer}
+//                 </p>
+
+//                 <p class="location">
+//                     📍 ${crop.location}
+//                 </p>
+
+//                 <h3>
+//                     ₹${crop.price.toLocaleString("en-IN")}
+//                     / Quintal
+//                 </h3>
+
+//                 <button
+//                     class="view-btn"
+//                     onclick="openProductDetails('${crop.name}')"
+//                 >
+//                     View Details
+//                 </button>
+
+//             </div>
+//         `;
+
+
+//         cropContainer.appendChild(card);
+
+//     });
+
+// }
+
+
+// // Show all crops
+// if (cropContainer) {
+//     displayCrops(cropDatabase);
+// }
+
+
+// // ======================================================
+// // 3. CROP SEARCH + CATEGORY FILTER
+// // ======================================================
+
+// const cropSearch = document.getElementById("cropSearch");
+// const cropCategory = document.getElementById("cropCategory");
+
+
+// function filterCrops() {
+
+//     if (!cropSearch || !cropCategory) {
+//         return;
+//     }
+
+
+//     const searchText =
+//         cropSearch.value.toLowerCase().trim();
+
+//     const selectedCategory =
+//         cropCategory.value;
+
+
+//     const filteredCrops =
+//         cropDatabase.filter(function(crop) {
+
+//             const matchesSearch =
+//                 crop.name
+//                     .toLowerCase()
+//                     .includes(searchText);
+
+
+//             const matchesCategory =
+//                 selectedCategory === "all" ||
+//                 crop.category === selectedCategory;
+
+
+//             return matchesSearch &&
+//                    matchesCategory;
+
+//         });
+
+
+//     displayCrops(filteredCrops);
+
+// }
+
+
+// if (cropSearch) {
+//     cropSearch.addEventListener(
+//         "input",
+//         filterCrops
+//     );
+// }
+
+
+// if (cropCategory) {
+//     cropCategory.addEventListener(
+//         "change",
+//         filterCrops
+//     );
+// }
+// ==========================================
+// LOAD CROPS FROM BACKEND
+// ==========================================
 
 const cropContainer = document.getElementById("cropContainer");
 
-function displayCrops(crops) {
+let backendCrops = [];
 
-    if (!cropContainer) {
-        return;
-    }
-
-    cropContainer.innerHTML = "";
-
-    if (crops.length === 0) {
-
-        cropContainer.innerHTML = `
-            <div class="no-crops">
-                <h2>😔 No crops found</h2>
-                <p>Try another crop name or category.</p>
-            </div>
-        `;
-
-        return;
-    }
-
-
-    crops.forEach(function(crop) {
-
-        const card = document.createElement("div");
-
-        card.className = "market-card";
-
-        card.dataset.category = crop.category;
-
-
-        card.innerHTML = `
-
-            <div class="market-image">
-                ${crop.icon}
-            </div>
-
-            <div class="market-info">
-
-                <span class="category">
-                    ${crop.category}
-                </span>
-
-                <h2>${crop.name}</h2>
-
-                <p>
-                    Fresh quality ${crop.name}
-                    directly from farmers.
-                </p>
-
-                <p class="farmer">
-                    👨‍🌾 Farmer: ${crop.farmer}
-                </p>
-
-                <p class="location">
-                    📍 ${crop.location}
-                </p>
-
-                <h3>
-                    ₹${crop.price.toLocaleString("en-IN")}
-                    / Quintal
-                </h3>
-
-                <button
-                    class="view-btn"
-                    onclick="openProductDetails('${crop.name}')"
-                >
-                    View Details
-                </button>
-
-            </div>
-        `;
-
-
-        cropContainer.appendChild(card);
-
-    });
-
-}
-
-
-// Show all crops
 if (cropContainer) {
-    displayCrops(cropDatabase);
-}
 
+    function displayCrops(crops) {
 
-// ======================================================
-// 3. CROP SEARCH + CATEGORY FILTER
-// ======================================================
+        cropContainer.innerHTML = "";
 
-const cropSearch = document.getElementById("cropSearch");
-const cropCategory = document.getElementById("cropCategory");
+        if (crops.length === 0) {
+            cropContainer.innerHTML = `
+                <div class="no-crops">
+                    <h2>😔 No crops found</h2>
+                    <p>Try another crop name or category.</p>
+                </div>
+            `;
+            return;
+        }
 
+        crops.forEach(function(crop) {
 
-function filterCrops() {
+            const card = document.createElement("div");
 
-    if (!cropSearch || !cropCategory) {
-        return;
+            card.className = "market-card";
+
+            card.setAttribute(
+                "data-category",
+                crop.category
+            );
+
+            card.innerHTML = `
+                <div class="market-image">
+                    ${crop.icon || "🌾"}
+                </div>
+
+                <div class="market-info">
+
+                    <span class="category">
+                        ${crop.category}
+                    </span>
+
+                    <h2>${crop.name}</h2>
+
+                    <p>
+                        Fresh quality ${crop.name}
+                        directly from farmers.
+                    </p>
+
+                    <p class="farmer">
+                        👨‍🌾 Farmer: ${crop.farmer}
+                    </p>
+
+                    <p class="location">
+                        📍 ${crop.location}
+                    </p>
+
+                    <h3>
+                        ₹${Number(crop.price).toLocaleString("en-IN")}
+                        / Quintal
+                    </h3>
+
+                    <a
+                        href="product-details.html"
+                        class="view-btn"
+                    >
+                        View Details
+                    </a>
+
+                </div>
+            `;
+
+            cropContainer.appendChild(card);
+        });
     }
 
 
-    const searchText =
-        cropSearch.value.toLowerCase().trim();
+    // Get crops from backend
 
-    const selectedCategory =
-        cropCategory.value;
+    fetch("http://localhost:5000/api/crops")
 
+        .then(function(response) {
+            return response.json();
+        })
 
-    const filteredCrops =
-        cropDatabase.filter(function(crop) {
+        .then(function(data) {
 
-            const matchesSearch =
-                crop.name
-                    .toLowerCase()
-                    .includes(searchText);
+            backendCrops = data;
 
+            console.log("Crops received from backend:", data);
 
-            const matchesCategory =
-                selectedCategory === "all" ||
-                crop.category === selectedCategory;
+            displayCrops(backendCrops);
 
+        })
 
-            return matchesSearch &&
-                   matchesCategory;
+        .catch(function(error) {
 
+            console.error("Backend Error:", error);
+
+            cropContainer.innerHTML = `
+                <div class="no-crops">
+                    <h2>⚠️ Backend connection failed</h2>
+                    <p>
+                        Make sure your Node.js server is running.
+                    </p>
+                </div>
+            `;
         });
 
 
-    displayCrops(filteredCrops);
+    // ==========================================
+    // CROP SEARCH
+    // ==========================================
+
+    const cropSearch =
+        document.getElementById("cropSearch");
+
+    if (cropSearch) {
+
+        cropSearch.addEventListener(
+            "input",
+            function() {
+
+                const searchText =
+                    cropSearch.value
+                        .toLowerCase()
+                        .trim();
+
+                const filteredCrops =
+                    backendCrops.filter(function(crop) {
+
+                        return crop.name
+                            .toLowerCase()
+                            .includes(searchText);
+
+                    });
+
+                displayCrops(filteredCrops);
+            }
+        );
+    }
+
+
+    // ==========================================
+    // CROP CATEGORY FILTER
+    // ==========================================
+
+    const cropCategory =
+        document.getElementById("cropCategory");
+
+    if (cropCategory) {
+
+        cropCategory.addEventListener(
+            "change",
+            function() {
+
+                const selectedCategory =
+                    cropCategory.value;
+
+                const searchText =
+                    cropSearch.value
+                        .toLowerCase()
+                        .trim();
+
+                const filteredCrops =
+                    backendCrops.filter(function(crop) {
+
+                        const matchesCategory =
+                            selectedCategory === "all" ||
+                            crop.category === selectedCategory;
+
+                        const matchesSearch =
+                            crop.name
+                                .toLowerCase()
+                                .includes(searchText);
+
+                        return matchesCategory &&
+                               matchesSearch;
+                    });
+
+                displayCrops(filteredCrops);
+            }
+        );
+    }
 
 }
-
-
-if (cropSearch) {
-    cropSearch.addEventListener(
-        "input",
-        filterCrops
-    );
-}
-
-
-if (cropCategory) {
-    cropCategory.addEventListener(
-        "change",
-        filterCrops
-    );
-}
-
 
 // ======================================================
 // 4. PRODUCT DETAILS
@@ -1676,27 +1865,39 @@ function addFarmerCrop() {
 
     }
 
+fetch("http://localhost:5000/api/crops", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+    name: name,
+    price: price,
+    quantity: quantity,
+    category: category,
+    farmerEmail: JSON.parse(sessionStorage.getItem("loggedInUser")).email
+})
+})
+.then(response => response.json())
+.then(data => {
+    alert(data.message);
 
-    alert(
-        "🌾 " +
-        name +
-        " added successfully!"
-    );
-
+    loadFarmerCrops();
 
     nameElement.value = "";
     priceElement.value = "";
     quantityElement.value = "";
     categoryElement.value = "";
 
-
-    const form =
-        document.getElementById("cropForm");
-
-
+    const form = document.getElementById("cropForm");
     if (form) {
         form.style.display = "none";
     }
+})
+.catch(error => {
+    console.log("Crop error:", error);
+    alert("Failed to add crop.");
+});
 
 }
 
@@ -1706,60 +1907,52 @@ function addFarmerCrop() {
 // ======================================================
 
 function loginUser(event) {
+    event.preventDefault();
 
-    if (event) {
-        event.preventDefault();
-    }
+    const form = document.getElementById("loginForm");
 
+    const email = form.querySelector('input[type="email"]').value;
+    const password = form.querySelector('input[type="password"]').value;
 
-    const selectedUser =
-        document.querySelector(
-            'input[name="user"]:checked'
-        );
-
+    const selectedUser = form.querySelector(
+        'input[name="user"]:checked'
+    );
 
     if (!selectedUser) {
-
-        alert(
-            "Please select Farmer or Buyer."
-        );
-
+        alert("Please select Farmer or Buyer.");
         return;
-
     }
 
+    const accountType = selectedUser.value;
 
-    if (
-        selectedUser.value ===
-        "farmer"
-    ) {
+    fetch("http://localhost:5000/api/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email,
+            password,
+            accountType
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Invalid login");
+        }
+        return response.json();
+    })
+    .then(data => {
+        alert(data.message);
+       
+sessionStorage.setItem("loggedInUser", JSON.stringify(data.user));
 
-        alert(
-            "👨‍🌾 Welcome Farmer!"
-        );
-
-
-        window.location.href =
-            "farmer-dashboard.html";
-
-    }
-
-
-    else if (
-        selectedUser.value ===
-        "buyer"
-    ) {
-
-        alert(
-            "🛒 Welcome Buyer!"
-        );
-
-
-        window.location.href =
-            "crops.html";
-
-    }
-
+  window.location.href = "index.html";
+    })
+    .catch(error => {
+        alert("Invalid email, password, or account type.");
+        console.log("Login error:", error);
+    });
 }
 
 
@@ -1981,3 +2174,313 @@ document.addEventListener(
 
     }
 );
+function registerUser(event) {
+    event.preventDefault();
+
+    const form = document.getElementById("registerForm");
+
+    const inputs = form.querySelectorAll("input");
+
+    const name = inputs[0].value;
+    const email = inputs[1].value;
+    const phone = inputs[2].value;
+    const password = inputs[3].value;
+    const confirmPassword = inputs[4].value;
+
+    const accountType = form.querySelector(
+        'input[name="accountType"]:checked'
+    ).value;
+
+    if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+    }
+
+    fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name,
+            email,
+            phone,
+            password,
+            accountType
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+    })
+    .catch(error => {
+        console.log("Registration error:", error);
+        alert("Registration failed!");
+    });
+}
+const farmerName = document.getElementById("farmerName");
+
+if (farmerName) {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+    if (user) {
+        farmerName.textContent = user.name;
+    }
+}
+function logoutUser() {
+  sessionStorage.removeItem("loggedInUser");
+    window.location.href = "login.html";
+}
+if (window.location.pathname.includes("index.html") || window.location.pathname.endsWith("/")) {
+    const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+    if (!loggedInUser) {
+        window.location.href = "login.html";
+    }
+}
+if (window.location.pathname.includes("index.html") || window.location.pathname.endsWith("/")) {
+   const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+    if (!loggedInUser) {
+        window.location.href = "login.html";
+    }
+}
+const farmerDashboardLink = document.getElementById("farmerDashboardLink");
+const buyerDashboardLink = document.getElementById("buyerDashboardLink");
+
+const loggedInUser = JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+if (farmerDashboardLink && buyerDashboardLink && loggedInUser) {
+
+    if (loggedInUser.accountType === "farmer") {
+        buyerDashboardLink.style.display = "none";
+    }
+
+    if (loggedInUser.accountType === "buyer") {
+        farmerDashboardLink.style.display = "none";
+    }
+}
+// Load farmer crops
+function loadFarmerCrops() {
+    console.log("loadFarmerCrops is running");
+
+    const farmerCropTable = document.getElementById("farmerCropTable");
+
+    if (!farmerCropTable) {
+        return;
+    }
+
+    fetch(
+    "http://localhost:5000/api/farmer-crops?email=" +
+    JSON.parse(sessionStorage.getItem("loggedInUser")).email
+)
+        .then(response => response.json())
+        .then(crops => {
+
+            farmerCropTable.innerHTML = "";
+
+            if (crops.length === 0) {
+                farmerCropTable.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 30px;">
+                            🌱 No crops added yet
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            crops.forEach(crop => {
+
+                const row = document.createElement("tr");
+
+              row.innerHTML = `
+    <td>🌾 ${crop.name}</td>
+    <td>${crop.category}</td>
+    <td>₹${Number(crop.price).toLocaleString("en-IN")}</td>
+    <td>${crop.quantity || "Available"}</td>
+    <td>
+        <span class="status available">Available</span>
+       <button class="remove-crop-btn"
+        onclick="removeFarmerCrop('${crop.name}')">
+    Remove
+</button>
+    </td>
+`;
+
+                farmerCropTable.appendChild(row);
+            });
+
+        })
+        .catch(error => {
+            console.log("Failed to load crops:", error);
+        });
+}
+loadFarmerCrops();
+function removeFarmerCrop(cropName) {
+
+    const farmerEmail =
+        JSON.parse(sessionStorage.getItem("loggedInUser")).email;
+
+    fetch(
+        "http://localhost:5000/api/crops/" +
+        encodeURIComponent(cropName) +
+        "?email=" +
+        encodeURIComponent(farmerEmail),
+        {
+            method: "DELETE"
+        }
+    )
+    .then(response => response.json())
+    .then(data => {
+
+        alert(data.message);
+
+        loadFarmerCrops();
+
+    })
+    .catch(error => {
+
+        console.log("Remove crop error:", error);
+
+        alert("Failed to remove crop.");
+
+    });
+}
+function loadBuyerCrops() {
+
+    const container = document.getElementById("buyerCropContainer");
+
+    if (!container) {
+        return;
+    }
+
+    fetch("http://localhost:5000/api/crops")
+        .then(response => response.json())
+        .then(crops => {
+
+            container.innerHTML = "";
+
+            crops.forEach(crop => {
+
+                const card = document.createElement("div");
+
+                card.className = "buyer-crop-card";
+
+                card.innerHTML = `
+                    <div class="crop-icon">${crop.icon}</div>
+
+                    <h3>${crop.name}</h3>
+
+                    <p>Category: ${crop.category}</p>
+
+                    <p>📍 ${crop.location}</p>
+
+                    <p>👨‍🌾 Farmer: ${crop.farmer}</p>
+
+                    <h4>₹${crop.price} / Quintal</h4>
+
+      <div>
+    <button onclick="viewCropDetails('${crop.name}')">
+        View Details
+    </button>
+
+    <button onclick="addBuyerCropToCart('${crop.name}')">
+        🛒 Add to Cart
+    </button>
+</div>
+                `;
+
+                container.appendChild(card);
+
+            });
+
+        })
+        .catch(error => {
+            console.log("Buyer crop error:", error);
+        });
+}
+
+loadBuyerCrops();
+function viewCropDetails(cropName) {
+    window.location.href =
+        "product-details.html?crop=" +
+        encodeURIComponent(cropName);
+}
+function addBuyerCropToCart(cropName) {
+
+    fetch("http://localhost:5000/api/crops")
+        .then(response => response.json())
+        .then(crops => {
+
+            const crop = crops.find(c => c.name === cropName);
+
+            if (!crop) {
+                alert("Crop not found.");
+                return;
+            }
+
+            localStorage.setItem(
+                "cartProduct",
+                JSON.stringify({
+    name: crop.name,
+    price: crop.price,
+    quantity: 1,
+    unit: "Quintal",
+    farmer: crop.farmer,
+    location: crop.location,
+    image: crop.icon
+})
+            );
+
+            alert("🌾 Crop added to cart!");
+
+        })
+        .catch(error => {
+            console.log("Cart error:", error);
+            alert("Failed to add crop to cart.");
+        });
+}
+function loadCart() {
+
+    const container = document.getElementById("cartContainer");
+
+    if (!container) {
+        return;
+    }
+
+    const cartProduct = localStorage.getItem("cartProduct");
+
+    if (!cartProduct) {
+        container.innerHTML = `
+            <p>🛒 Your cart is empty.</p>
+        `;
+        return;
+    }
+
+    const product = JSON.parse(cartProduct);
+
+    container.innerHTML = `
+        <div class="cart-item">
+           <div class="cart-icon">${product.image}</div>
+
+            <h2>${product.name}</h2>
+
+            <p>👨‍🌾 Farmer: ${product.farmer}</p>
+
+            <p>📍 Location: ${product.location}</p>
+
+            <h3>₹${product.price} / ${product.unit}</h3>
+
+            <button onclick="removeCartProduct()">
+                ❌ Remove
+            </button>
+
+            <button onclick="goToCheckout()">
+                💳 Proceed to Checkout
+            </button>
+        </div>
+    `;
+}
+
+loadCart();
