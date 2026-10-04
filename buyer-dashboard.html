@@ -64,29 +64,60 @@
 
             <span>🛒 BUYER DASHBOARD</span>
 
-            <h1>Welcome, Buyer! 👋</h1>
+           <h1>Welcome, <span id="buyerName">Buyer</span>! 👋</h1>
 
             <p>
                 Discover fresh crops, connect with farmers,
                 and manage your purchases easily.
             </p>
+            
 
         </div>
 
     </section>
-    <section class="buyer-crops-section">
+    <section class="buyer-actions">
+
+    <div class="action-card">
+        <h3>🌾 Browse Crops</h3>
+        <p>Explore fresh crops available from farmers.</p>
+        <a href="crops.html">View Crops</a>
+    </div>
+
+    <div class="action-card">
+        <h3>🛒 My Cart</h3>
+        <p>View your selected crops and continue shopping.</p>
+        <a href="cart.html">Open Cart</a>
+    </div>
+
+    <div class="action-card">
+        <h3>📈 Market Prices</h3>
+        <p>Check the latest available crop prices.</p>
+        <a href="market-prices.html">View Prices</a>
+    </div>
+    </section>
+    <section class="buyer-orders-section">
 
     <div class="section-heading">
-        <span>🌾 AVAILABLE CROPS</span>
-        <h2>Fresh Crops from Farmers</h2>
-        <p>Browse crops currently available from farmers.</p>
+        <span>📦 MY ORDERS</span>
+        <h2>Your Recent Orders</h2>
+        <p>Orders you place will appear here.</p>
     </div>
+    <div class="buyer-order-count">
+    📦 Total Orders
+    <span id="totalBuyerOrders">0</span>
+</div>
 
-    <div id="buyerCropContainer" class="buyer-crop-container">
-        <p>Loading crops...</p>
-    </div>
+  <div id="buyerOrders">
+    <p>No orders yet.</p>
+</div>
+
+
 
 </section>
+
+
+
+
 
 
     <script src="main.js"></script>

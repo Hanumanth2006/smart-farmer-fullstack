@@ -123,6 +123,34 @@ app.get("/api/farmer-crops", (req, res) => {
 
     res.json(myCrops);
 });
+// UPDATE CROP
+app.put("/api/crops/:name", (req, res) => {
+
+    const cropName = req.params.name;
+    const farmerEmail = req.query.email;
+
+    const { price, quantity } = req.body;
+
+   const crop = farmerCrops.find(
+    crop =>
+        crop.name.trim().toLowerCase() === cropName.trim().toLowerCase() &&
+        crop.farmerEmail === farmerEmail
+);
+
+    if (!crop) {
+        return res.status(404).json({
+            message: "Crop not found."
+        });
+    }
+
+    crop.price = Number(price);
+    crop.quantity = Number(quantity);
+
+    res.json({
+        message: "🌾 Crop updated successfully!"
+    });
+});
+
 // Remove Farmer Crop
 app.delete("/api/crops/:name", (req, res) => {
 

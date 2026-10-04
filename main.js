@@ -2,7 +2,7 @@
 
 const cropDatabase = [
 
-    // ================= GRAINS =================
+  // ================= GRAINS =================
 
     {
         name: "Rice",
@@ -989,7 +989,7 @@ const cropDatabase = [
 //                     class="view-btn"
 //                     onclick="openProductDetails('${crop.name}')"
 //                 >
-//                     View Details
+//                     
 //                 </button>
 
 //             </div>
@@ -1136,12 +1136,12 @@ if (cropContainer) {
                         / Quintal
                     </h3>
 
-                    <a
-                        href="product-details.html"
-                        class="view-btn"
-                    >
-                        View Details
-                    </a>
+                  <button
+    class="view-btn"
+    onclick='openProductDetails(${JSON.stringify(crop)})'
+>
+    View Details
+</button>
 
                 </div>
             `;
@@ -1265,28 +1265,14 @@ if (cropContainer) {
 // 4. PRODUCT DETAILS
 // ======================================================
 
-function openProductDetails(cropName) {
-
-    const crop =
-        cropDatabase.find(function(item) {
-            return item.name === cropName;
-        });
-
-
-    if (!crop) {
-        return;
-    }
-
+function openProductDetails(crop) {
 
     localStorage.setItem(
         "selectedCrop",
         JSON.stringify(crop)
     );
 
-
-    window.location.href =
-        "product-details.html";
-
+    window.location.href = "product-details.html";
 }
 
 
@@ -1302,6 +1288,9 @@ const priceSearch =
 
 const priceLocation =
     document.getElementById("priceLocation");
+
+const priceCategory =
+    document.getElementById("priceCategory");
 
 
 function displayMarketPrices(crops) {
@@ -1395,139 +1384,233 @@ function displayMarketPrices(crops) {
 // Display market prices
 if (priceTableBody) {
 
-    displayMarketPrices(cropDatabase);
+    let marketCrops = [];
+
+    fetch("https://smart-farmer-fullstack.onrender.com/api/crops")
+        .then(response => response.json())
+        .then(crops => {
+
+            marketCrops = crops;
+
+            displayMarketPrices(marketCrops);
+
+            function filterMarketPrices() {
+
+                const searchText =
+                    priceSearch
+                        ? priceSearch.value.toLowerCase().trim()
+                        : "";
+
+                const selectedLocation =
+                    priceLocation
+                        ? priceLocation.value
+                        : "all";
+
+                const selectedCategory =
+                    priceCategory
+                        ? priceCategory.value
+                        : "all";
+
+                const filteredCrops =
+                    marketCrops.filter(function(crop) {
+
+                        const matchesSearch =
+                            crop.name
+                                .toLowerCase()
+                                .includes(searchText);
+
+                        const matchesLocation =
+                            selectedLocation === "all" ||
+                            crop.location
+                                .toLowerCase()
+                                .includes(
+                                    selectedLocation.toLowerCase()
+                                );
+
+                        const matchesCategory =
+                            selectedCategory === "all" ||
+                            crop.category
+                                .toLowerCase() ===
+                            selectedCategory.toLowerCase();
+
+                        return matchesSearch &&
+                               matchesLocation &&
+                               matchesCategory;
+                    });
+
+                displayMarketPrices(filteredCrops);
+            }
+
+            if (priceSearch) {
+                priceSearch.addEventListener(
+                    "input",
+                    filterMarketPrices
+                );
+            }
+
+            if (priceLocation) {
+                priceLocation.addEventListener(
+                    "change",
+                    filterMarketPrices
+                );
+            }
+
+            if (priceCategory) {
+                priceCategory.addEventListener(
+                    "change",
+                    filterMarketPrices
+                );
+            }
 
 
-    function filterMarketPrices() {
+            // Market Comparison
 
-        const searchText =
-            priceSearch
-                ? priceSearch.value
-                    .toLowerCase()
-                    .trim()
-                : "";
+            // Market Comparison
 
+const comparisonCrop =
+    document.getElementById("comparisonCrop");
 
-        const selectedLocation =
-            priceLocation
-                ? priceLocation.value
-                : "all";
+const comparisonResults =
+    document.getElementById("comparisonResults");
 
+if (comparisonCrop && comparisonResults) {
 
-        const filteredCrops =
-            cropDatabase.filter(function(crop) {
+    comparisonCrop.innerHTML =
+        '<option value="">Select a Crop</option>';
 
-                const matchesSearch =
-                    crop.name
-                        .toLowerCase()
-                        .includes(searchText);
+    const cropNames = [];
 
+    marketCrops.forEach(function(crop) {
 
-                const matchesLocation =
-                    selectedLocation === "all" ||
-                    crop.location.toLowerCase() ===
-                    selectedLocation.toLowerCase();
+        if (!cropNames.includes(crop.name)) {
+            cropNames.push(crop.name);
+        }
 
+    });
 
-                return matchesSearch &&
-                       matchesLocation;
+    cropNames.forEach(function(name) {
 
-            });
+        const option =
+            document.createElement("option");
 
+        option.value = name;
+        option.textContent = name;
 
-        displayMarketPrices(filteredCrops);
+        comparisonCrop.appendChild(option);
 
-    }
+    });
 
+    comparisonCrop.addEventListener(
+        "change",
+        function() {
 
-    if (priceSearch) {
+            const selectedCrop =
+                comparisonCrop.value;
 
-        priceSearch.addEventListener(
-            "input",
-            filterMarketPrices
-        );
+            comparisonResults.innerHTML = "";
 
-    }
+            if (!selectedCrop) {
+                return;
+            }
 
+            const results =
+                marketCrops.filter(function(crop) {
+                    return crop.name === selectedCrop;
+                });
 
-    if (priceLocation) {
+            results.forEach(function(crop) {
 
-        priceLocation.addEventListener(
-            "change",
-            filterMarketPrices
-        );
+                const card =
+                    document.createElement("div");
 
-    }
+                card.className =
+                    "comparison-card";
 
+                card.innerHTML =
+                    "<h3>" +
+                    crop.icon + " " +
+                    crop.name +
+                    "</h3>" +
+
+                    "<p>🏪 Market: " +
+                    (crop.market || "Local Market") +
+                    "</p>" +
+
+                    "<p>📍 Location: " +
+                    crop.location +
+                    "</p>" +
+
+                    "<h4>💰 ₹" +
+                    crop.price.toLocaleString("en-IN") +
+                    " / Quintal</h4>" +
+
+                    "<p>📅 " +
+                    (crop.date || "") +
+                    "</p>";
+
+                comparisonResults.appendChild(card);
+});
+
+        }
+    );
+
+            }
+        });
 }
-
+// ======================================================
+// 6. SHOPPING CART
 
 // ======================================================
 // 6. SHOPPING CART
 // ======================================================
 
-function addProductToCart(
-    productName = "Rice",
-    productPrice = 2500,
-    productFarmer = "Ramesh",
-    productLocation = "Andhra Pradesh",
-    productIcon = "🌾"
-) {
+function addProductToCart() {
+
+    const savedCrop =
+        localStorage.getItem("selectedCrop");
+
+    if (!savedCrop) {
+        alert("Crop not found.");
+        return;
+    }
+
+    const crop =
+        JSON.parse(savedCrop);
 
     const quantityElement =
         document.getElementById("quantity");
-
 
     const quantity =
         quantityElement
             ? Number(quantityElement.value)
             : 1;
 
-
     if (!quantity || quantity <= 0) {
-
         alert("Please enter a valid quantity.");
-
         return;
-
     }
 
-
     const product = {
-
-        name: productName,
-
-        price: productPrice,
-
+        name: crop.name,
+        price: crop.price,
         quantity: quantity,
-
         unit: "Quintal",
-
-        farmer: productFarmer,
-
-        location: productLocation,
-
-        image: productIcon
-
+        farmer: crop.farmer,
+        location: crop.location,
+        image: crop.icon
     };
-
 
     localStorage.setItem(
         "cartProduct",
         JSON.stringify(product)
     );
 
-
     alert(
-        "🌾 " +
-        productName +
+        "🌾 " + crop.name +
         " added to your cart!"
     );
 
-
-    window.location.href =
-        "cart.html";
-
+    window.location.href = "cart.html";
 }
 
 
@@ -1563,23 +1646,44 @@ function addToCart() {
 
 function buyNow() {
 
+    const savedCrop =
+        localStorage.getItem("selectedCrop");
+
+    if (!savedCrop) {
+        alert("Crop not found.");
+        return;
+    }
+
+    const crop =
+        JSON.parse(savedCrop);
+
     const quantityElement =
         document.getElementById("quantity");
 
-
     const quantity =
         quantityElement
-            ? quantityElement.value
+            ? Number(quantityElement.value)
             : 1;
 
+    if (!quantity || quantity <= 0) {
+        alert("Please enter a valid quantity.");
+        return;
+    }
 
-    alert(
-        "⚡ Proceeding to checkout!\n" +
-        "Quantity: " +
-        quantity +
-        " Quintal"
+    localStorage.setItem(
+        "cartProduct",
+        JSON.stringify({
+            name: crop.name,
+            price: crop.price,
+            quantity: quantity,
+            unit: "Quintal",
+            farmer: crop.farmer,
+            location: crop.location,
+            image: crop.icon
+        })
     );
 
+    window.location.href = "checkout.html";
 }
 
 
@@ -1755,21 +1859,46 @@ function placeOrder(event) {
         event.preventDefault();
     }
 
+    const cartProduct =
+        JSON.parse(localStorage.getItem("cartProduct"));
 
-    localStorage.removeItem(
-        "cartProduct"
-    );
+    if (!cartProduct) {
+        alert("Your cart is empty.");
+        return;
+    }
 
+   const loggedInUser =
+    JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+const orderKey =
+    "buyerOrders_" + loggedInUser.email;
+
+const orders =
+    JSON.parse(localStorage.getItem(orderKey)) || [];
+
+   orders.push({
+    orderId: "ORD" + Date.now(),
+    name: cartProduct.name,
+    price: cartProduct.price,
+    quantity: cartProduct.quantity,
+    farmer: cartProduct.farmer,
+    location: cartProduct.location,
+    date: new Date().toLocaleDateString("en-IN")
+});
+localStorage.setItem(
+    orderKey,
+    JSON.stringify(orders)
+);
+
+    localStorage.removeItem("cartProduct");
 
     alert(
         "🎉 Order placed successfully!\n\n" +
         "Thank you for supporting farmers."
     );
 
-
     window.location.href =
-        "index.html";
-
+        "buyer-dashboard.html";
 }
 
 
@@ -2049,7 +2178,7 @@ function displayProductDetails() {
 
     container.innerHTML = `
 
-        <div class="product-details-card">
+       <div class="product-container">
 
             <div class="product-image">
                 ${crop.icon}
@@ -2093,48 +2222,39 @@ function displayProductDetails() {
                 </h2>
 
 
-                <label>
-                    Quantity:
-                </label>
+               
+               <div class="quantity">
 
-                <input
-                    type="number"
-                    id="quantity"
-                    value="1"
-                    min="1"
-                >
+    <label for="quantity">Quantity:</label>
 
+    <input
+        type="number"
+        id="quantity"
+        value="1"
+        min="1"
+    >
 
-                <button
-                    class="shop-btn"
-                    onclick="
-                        addProductToCart(
-                            '${crop.name}',
-                            ${crop.price},
-                            '${crop.farmer}',
-                            '${crop.location}',
-                            '${crop.icon}'
-                        )
-                    "
-                >
-                    🛒 Add to Cart
-                </button>
+    <span>Quintal</span>
 
+</div>
 
-                <button
-                    class="checkout-btn"
-                    onclick="
-                        addProductToCart(
-                            '${crop.name}',
-                            ${crop.price},
-                            '${crop.farmer}',
-                            '${crop.location}',
-                            '${crop.icon}'
-                        )
-                    "
-                >
-                    ⚡ Buy Now
-                </button>
+<div class="product-buttons">
+
+    <button
+        class="cart-btn"
+        onclick="addProductToCart()"
+    >
+        🛒 Add to Cart
+    </button>
+
+    <button
+        class="buy-btn"
+        onclick="buyNow()"
+    >
+        ⚡ Buy Now
+    </button>
+
+</div>
 
             </div>
 
@@ -2278,6 +2398,50 @@ function loadFarmerCrops() {
         .then(crops => {
 
             farmerCropTable.innerHTML = "";
+            // Calculate dashboard statistics
+
+const totalCrops =
+    crops.length;
+
+const totalQuantity =
+    crops.reduce(
+        (sum, crop) =>
+            sum + Number(crop.quantity || 0),
+        0
+    );
+
+const totalValue =
+    crops.reduce(
+        (sum, crop) =>
+            sum +
+            (Number(crop.price || 0) *
+             Number(crop.quantity || 0)),
+        0
+    );
+
+const totalCropsElement =
+    document.getElementById("totalFarmerCrops");
+
+const totalQuantityElement =
+    document.getElementById("totalFarmerQuantity");
+
+const totalValueElement =
+    document.getElementById("totalFarmerValue");
+
+if (totalCropsElement) {
+    totalCropsElement.textContent =
+        totalCrops;
+}
+
+if (totalQuantityElement) {
+    totalQuantityElement.textContent =
+        totalQuantity;
+}
+
+if (totalValueElement) {
+    totalValueElement.textContent =
+        "₹" + totalValue.toLocaleString("en-IN");
+}
 
             if (crops.length === 0) {
                 farmerCropTable.innerHTML = `
@@ -2299,13 +2463,21 @@ function loadFarmerCrops() {
     <td>${crop.category}</td>
     <td>₹${Number(crop.price).toLocaleString("en-IN")}</td>
     <td>${crop.quantity || "Available"}</td>
-    <td>
-        <span class="status available">Available</span>
-       <button class="remove-crop-btn"
+   <td>
+    <span class="status available">Available</span>
+
+    <button
+        class="edit-crop-btn"
+        onclick="editFarmerCrop('${crop.name}', ${crop.price}, ${crop.quantity})">
+        ✏️ Edit
+    </button>
+
+    <button
+        class="remove-crop-btn"
         onclick="removeFarmerCrop('${crop.name}')">
-    Remove
-</button>
-    </td>
+        Remove
+    </button>
+</td>
 `;
 
                 farmerCropTable.appendChild(row);
@@ -2381,10 +2553,9 @@ function loadBuyerCrops() {
                     <h4>₹${crop.price} / Quintal</h4>
 
       <div>
-    <button onclick="viewCropDetails('${crop.name}')">
-        View Details
-    </button>
-
+   <button onclick='openProductDetails(${JSON.stringify(crop)})'>
+    View Details
+</button>
     <button onclick="addBuyerCropToCart('${crop.name}')">
         🛒 Add to Cart
     </button>
@@ -2484,3 +2655,204 @@ function loadCart() {
 }
 
 loadCart();
+const buyerName = document.getElementById("buyerName");
+
+if (buyerName) {
+    const loggedInUser =
+        JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+    if (loggedInUser) {
+        buyerName.textContent = loggedInUser.name;
+    }
+}
+function loadBuyerOrders() {
+
+    const ordersContainer =
+        document.getElementById("buyerOrders");
+
+    if (!ordersContainer) {
+        return;
+    }
+
+const loggedInUser =
+    JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+if (!loggedInUser) {
+    return;
+}
+
+const orderKey =
+    "buyerOrders_" + loggedInUser.email;
+
+const orders =
+    JSON.parse(localStorage.getItem(orderKey)) || [];
+
+    if (orders.length === 0) {
+        ordersContainer.innerHTML =
+            "<p>No orders yet.</p>";
+        return;
+    }
+
+    ordersContainer.innerHTML = "";
+
+    orders.forEach(order => {
+
+        const orderCard =
+            document.createElement("div");
+
+        orderCard.className = "buyer-order-card";
+
+        orderCard.innerHTML = `
+    <h3>🌾 ${order.name}</h3>
+    <p>👨‍🌾 Farmer: ${order.farmer}</p>
+    <p>📍 ${order.location}</p>
+    <p>📦 Quantity: ${order.quantity} Quintal</p>
+    <p>💰 Price: ₹${order.price}</p>
+    <p>📅 Date: ${order.date}</p>
+    <span class="order-status">✅ Order Placed</span>
+
+   <button onclick="cancelBuyerOrder(${orders.indexOf(order)})">
+     Cancel Order
+</button>
+`;
+
+        ordersContainer.appendChild(orderCard);
+    });
+}
+
+loadBuyerOrders();
+function clearBuyerOrders() {
+
+    localStorage.removeItem("buyerOrders");
+
+    loadBuyerOrders();
+
+    alert("🗑️ Orders cleared.");
+}
+function loadBuyerOrderCount() {
+
+    const countElement =
+        document.getElementById("totalBuyerOrders");
+
+    if (!countElement) {
+        return;
+    }
+
+   const loggedInUser =
+    JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+if (!loggedInUser) {
+    return;
+}
+
+const orderKey =
+    "buyerOrders_" + loggedInUser.email;
+
+const orders =
+    JSON.parse(localStorage.getItem(orderKey)) || [];
+
+    countElement.textContent = orders.length;
+}
+
+loadBuyerOrderCount();
+function cancelBuyerOrder(index) {
+
+   const loggedInUser =
+    JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+if (!loggedInUser) {
+    return;
+}
+
+const orderKey =
+    "buyerOrders_" + loggedInUser.email;
+
+const orders =
+    JSON.parse(localStorage.getItem(orderKey)) || [];
+
+    orders.splice(index, 1);
+
+   localStorage.setItem(
+    orderKey,
+    JSON.stringify(orders)
+);
+
+    loadBuyerOrders();
+    loadBuyerOrderCount();
+
+    alert("🗑️ Order removed.");
+}
+// Edit Farmer Crop
+
+function editFarmerCrop(cropName, oldPrice, oldQuantity) {
+
+    const newPrice = prompt(
+        "Enter new price per Quintal:",
+        oldPrice
+    );
+
+    if (newPrice === null) {
+        return;
+    }
+
+    const newQuantity = prompt(
+        "Enter new quantity:",
+        oldQuantity
+    );
+
+    if (newQuantity === null) {
+        return;
+    }
+
+    if (
+        newPrice === "" ||
+        newQuantity === "" ||
+        Number(newPrice) <= 0 ||
+        Number(newQuantity) <= 0
+    ) {
+        alert("Please enter valid price and quantity.");
+        return;
+    }
+
+    const loggedInUser =
+        JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+    if (!loggedInUser) {
+        alert("Please login again.");
+        return;
+    }
+
+    fetch(
+    "https://smart-farmer-fullstack.onrender.com/api/crops/" +
+        encodeURIComponent(cropName) +
+        "?email=" +
+        encodeURIComponent(loggedInUser.email),
+        {
+            method: "PUT",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                price: newPrice,
+                quantity: newQuantity
+            })
+        }
+    )
+    .then(response => response.json())
+    .then(data => {
+
+        alert(data.message);
+
+        loadFarmerCrops();
+
+    })
+    .catch(error => {
+
+        console.log("Edit crop error:", error);
+
+        alert("Failed to update crop.");
+
+    });
+}

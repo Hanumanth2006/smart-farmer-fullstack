@@ -35,11 +35,33 @@
     </header>
 
     <!-- Add Crop -->
-    <section class="add-crop-section">
+   <section class="add-crop-section">
 
-        <div class="dashboard-title">
+    <!-- Dashboard Statistics -->
+    <div class="farmer-stats">
 
-            <h2>My Crops</h2>
+        <div class="stat-card">
+            <h3>🌾 Total Crops</h3>
+            <p id="totalFarmerCrops">0</p>
+        </div>
+
+        <div class="stat-card">
+            <h3>📦 Total Quantity</h3>
+            <p id="totalFarmerQuantity">0</p>
+            <span>Quintal</span>
+        </div>
+
+        <div class="stat-card">
+            <h3>💰 Estimated Value</h3>
+            <p id="totalFarmerValue">₹0</p>
+        </div>
+
+    </div>
+
+
+    <div class="dashboard-title">
+
+        <h2>My Crops</h2>
 
             <button
                 class="add-crop-btn"
