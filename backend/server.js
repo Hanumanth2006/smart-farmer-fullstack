@@ -87,6 +87,26 @@ app.post("/api/login", (req, res) => {
     }
 });
 });
+app.put("/api/profile", (req, res) => {
+
+    const { email, name, phone, location } = req.body;
+
+    const user = users.find(u => u.email === email);
+
+    if (!user) {
+        return res.status(404).json({
+            message: "User not found."
+        });
+    }
+
+    user.name = name;
+    user.phone = phone;
+    user.location = location;
+
+    res.json({
+        message: "Profile updated successfully! 🌾"
+    });
+});
 // Add Farmer Crop
 app.post("/api/crops", (req, res) => {
 
