@@ -923,7 +923,7 @@ const cropDatabase = [
 
 // const cropContainer = document.getElementById("cropContainer");
 
-// function displayCrops(crops) {
+// 
 
 //     if (!cropContainer) {
 //         return;
@@ -1093,8 +1093,14 @@ if (cropContainer) {
             `;
             return;
         }
+const uniqueCrops = [];
 
-        crops.forEach(function(crop) {
+crops.forEach(function(crop) {
+    if (!uniqueCrops.some(c => c.name === crop.name)) {
+        uniqueCrops.push(crop);
+    }
+});
+        uniqueCrops.forEach(function(crop) {
 
             const card = document.createElement("div");
 
@@ -1390,9 +1396,17 @@ if (priceTableBody) {
         .then(response => response.json())
         .then(crops => {
 
-            marketCrops = crops;
+           marketCrops = crops;
 
-            displayMarketPrices(marketCrops);
+const uniqueMarketCrops = [];
+
+marketCrops.forEach(function(crop) {
+    if (!uniqueMarketCrops.some(c => c.name === crop.name)) {
+        uniqueMarketCrops.push(crop);
+    }
+});
+
+displayMarketPrices(uniqueMarketCrops);
 
             function filterMarketPrices() {
 
@@ -2276,17 +2290,7 @@ document.addEventListener(
     "DOMContentLoaded",
     function() {
 
-        // Refresh crop page
-        if (cropContainer) {
-            displayCrops(cropDatabase);
-        }
-
-        // Refresh market page
-        if (priceTableBody) {
-            displayMarketPrices(cropDatabase);
-        }
-
-        // Refresh cart page
+        // Cart
         displayCart();
 
         // Product details
@@ -2462,9 +2466,11 @@ if (totalValueElement) {
     <td>🌾 ${crop.name}</td>
     <td>${crop.category}</td>
     <td>₹${Number(crop.price).toLocaleString("en-IN")}</td>
-    <td>${crop.quantity || "Available"}</td>
+    <td>${Number(crop.quantity)}</td>
    <td>
-    <span class="status available">Available</span>
+   <span class="status ${Number(crop.quantity) > 0 ? "available" : "out-of-stock"}">
+    ${Number(crop.quantity) > 0 ? "Available" : "Out of Stock"}
+</span>
 
     <button
         class="edit-crop-btn"

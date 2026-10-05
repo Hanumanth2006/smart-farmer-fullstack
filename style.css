@@ -3165,3 +3165,59 @@ footer {
 .stat-card span {
     font-size: 14px;
 }
+/* Crop Action Buttons */
+
+.edit-crop-btn,
+.remove-crop-btn {
+    display: inline-block;
+    margin: 4px 15px;
+    padding: 8px 14px;
+   width: 90px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+/* Edit Button */
+
+.edit-crop-btn {
+    background: #00e4f4cc;
+    color: white;
+}
+
+.edit-crop-btn:hover {
+    background: #00c3d9;
+    transform: translateY(-1px);
+}
+
+/* Remove Button */
+
+.remove-crop-btn {
+    background: #e53535cf;
+    color: white;
+}
+
+.remove-crop-btn:hover {
+    background: #c62d28;
+    transform: translateY(-1px);
+}
+.status.available {
+    display: inline-block;
+    margin-right: 10px;
+}
+/* Out of Stock Status */
+
+.status.out-of-stock {
+    display: inline-block;
+    background: #ffebee;
+    color: #d32f2f;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 10px;
+}
