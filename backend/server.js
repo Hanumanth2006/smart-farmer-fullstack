@@ -77,11 +77,12 @@ app.post("/api/login", (req, res) => {
 
     res.json({
         message: "Login successful! 🌾",
-        user: {
-            name: user.name,
-            email: user.email,
-            accountType: user.accountType
-        }
+       user: {
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    accountType: user.accountType
+}
     });
 });
 // Add Farmer Crop
