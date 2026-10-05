@@ -38,7 +38,7 @@ app.get("/api/crops", (req, res) => {
 let users = [];
 
 app.post("/api/register", (req, res) => {
-    const { name, email, phone, password, accountType } = req.body;
+    const { name, email, phone, location, password, accountType } = req.body;
 const existingUser = users.find(u => u.email === email);
 
 if (existingUser) {
@@ -48,12 +48,13 @@ if (existingUser) {
 }
 
     users.push({
-        name,
-        email,
-        phone,
-        password,
-        accountType
-    });
+    name,
+    email,
+    phone,
+    location,
+    password,
+    accountType
+});
 
     res.json({
         message: "Registration successful! 🌾"
@@ -75,15 +76,16 @@ app.post("/api/login", (req, res) => {
         });
     }
 
-    res.json({
-        message: "Login successful! 🌾",
-       user: {
-    name: user.name,
-    email: user.email,
-    phone: user.phone,
-    accountType: user.accountType
-}
-    });
+  res.json({
+    message: "Login successful! 🌾",
+    user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        location: user.location,
+        accountType: user.accountType
+    }
+});
 });
 // Add Farmer Crop
 app.post("/api/crops", (req, res) => {
