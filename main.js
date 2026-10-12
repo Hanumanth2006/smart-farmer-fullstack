@@ -3110,3 +3110,31 @@ if (profileLocation) {
     });
 
 }
+// Mobile Navigation Menu
+const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+const navLinks = document.querySelector(".nav-links");
+
+if (mobileMenuBtn && navLinks) {
+
+    mobileMenuBtn.addEventListener("click", function () {
+
+        navLinks.classList.toggle("active");
+
+        const isOpen = navLinks.classList.contains("active");
+
+        mobileMenuBtn.textContent = isOpen ? "✕" : "☰";
+
+        mobileMenuBtn.setAttribute("aria-expanded", isOpen);
+
+    });
+
+    navLinks.querySelectorAll("a").forEach(function (link) {
+
+        link.addEventListener("click", function () {
+            navLinks.classList.remove("active");
+            mobileMenuBtn.textContent = "☰";
+            mobileMenuBtn.setAttribute("aria-expanded", "false");
+        });
+
+    });
+}
