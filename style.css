@@ -31,6 +31,8 @@ header {
 .logo {
     font-size: 24px;
     font-weight: bold;
+    margin-left: -120px;
+    margin-right: 10px;
     color: #2e7d32;
 }
 
@@ -3220,4 +3222,142 @@ footer {
     font-size: 11px;
     font-weight: 600;
     margin-right: 10px;
+}
+.profile-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: #88bcbecb;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 120px;
+    margin-right: 20px;
+}
+/* Profile Popup */
+.profile-popup {
+    display: none;
+    position: fixed;
+    top: 75px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.profile-card {
+    width: 320px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.close-profile {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: none;
+    background: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.profile-picture {
+    width: 70px;
+    height: 70px;
+    margin: 5px auto 10px;
+    border-radius: 50%;
+    background: #91cbcbdc;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+
+.profile-card h2 {
+    text-align: center;
+    margin: 5px 0;
+}
+
+.profile-card > p {
+    margin: 10px 0;
+}
+
+.profile-stat {
+    margin-top: 15px;
+    padding: 12px;
+    background: #f5fff5;
+    border-radius: 10px;
+}
+
+.edit-profile-btn,
+.profile-logout-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.edit-profile-btn {
+    background: #2d949dca;
+    color: white;
+}
+
+.profile-logout-btn {
+    background: #d32f2fe4;
+    color: white;
+}
+/* Edit Profile Popup */
+
+.edit-profile-popup {
+    display: none;
+    position: fixed;
+    top: 75px;
+    right: 30px;
+    z-index: 1100;
+}
+
+.edit-profile-card {
+    width: 320px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+.edit-profile-card h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.edit-profile-card input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+#saveProfileBtn,
+#cancelEditBtn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#saveProfileBtn {
+    background: #34aec1c1;
+    color: white;
+}
+
+#cancelEditBtn {
+    background: #ddd;
 }

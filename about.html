@@ -55,10 +55,85 @@
 
             </ul>
 
-           <div class="nav-buttons">
-    <a href="#" class="login-btn" onclick="logoutUser()">Logout</a>
+        <div class="nav-buttons">
+    <button class="profile-btn" id="profileBtn">
+        👤
+    </button>
 </div>
+<div id="profilePopup" class="profile-popup">
 
+    <div class="profile-card">
+
+        <button id="closeProfile" class="close-profile">✕</button>
+
+        <div class="profile-picture">👤</div>
+
+        <h2 id="profileName">User Name</h2>
+
+        <p>
+            <strong>Account Type:</strong>
+            <span id="profileAccountType"></span>
+        </p>
+
+        <p>
+            <strong>Name:</strong>
+            <span id="profileName2"></span>
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            <span id="profileEmail"></span>
+        </p>
+
+        <p>
+            <strong>Phone:</strong>
+            <span id="profilePhone"></span>
+        </p>
+
+        <p>
+            <strong>Location:</strong>
+            <span id="profileLocation">Not added</span>
+        </p>
+
+        <div class="profile-stat">
+            <h3>📊 Account Statistics</h3>
+            <p id="profileStats">Loading...</p>
+        </div>
+
+        <button id="editProfileBtn" class="edit-profile-btn">
+            ✏️ Edit Profile
+        </button>
+
+        <button onclick="logoutUser()" class="profile-logout-btn">
+            🚪 Logout
+        </button>
+
+    </div>
+
+</div>
+<div id="editProfilePopup" class="edit-profile-popup">
+
+    <div class="edit-profile-card">
+
+        <h3>✏️ Edit Profile</h3>
+
+        <input type="text" id="editName" placeholder="Name">
+
+        <input type="tel" id="editPhone" placeholder="Phone">
+
+        <input type="text" id="editLocation" placeholder="Location">
+
+        <button id="saveProfileBtn">
+            💾 Save Changes
+        </button>
+
+        <button id="cancelEditBtn">
+            ❌ Cancel
+        </button>
+
+    </div>
+
+</div>
         </nav>
     </header>
 

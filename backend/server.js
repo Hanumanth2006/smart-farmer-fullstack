@@ -148,7 +148,6 @@ app.get("/api/farmer-crops", (req, res) => {
 });
 // UPDATE CROP
 app.put("/api/crops/:name", (req, res) => {
-
     const cropName = req.params.name;
     const farmerEmail = req.query.email;
 

@@ -11,9 +11,26 @@ body {
 }
 @media (max-width: 900px) {
 
-    .nav-links {
-        display: none;
+    .navbar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
     }
+
+    .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+        width: 100%;
+        padding: 0;
+    }
+
+    .nav-links li {
+        list-style: none;
+    }
+
+}
 
     .feature-container {
         grid-template-columns: repeat(2, 1fr);
@@ -26,7 +43,6 @@ body {
     .hero-content h1 {
         font-size: 40px;
     }
-}
 
 
 @media (max-width: 600px) {
@@ -39,9 +55,11 @@ body {
         font-size: 20px;
     }
 
-    .nav-buttons {
-        display: none;
-    }
+   .nav-buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
 
     .feature-container {
         grid-template-columns: 1fr;

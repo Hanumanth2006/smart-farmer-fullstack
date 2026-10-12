@@ -2308,8 +2308,9 @@ function registerUser(event) {
     const name = inputs[0].value;
     const email = inputs[1].value;
     const phone = inputs[2].value;
-    const password = inputs[3].value;
-    const confirmPassword = inputs[4].value;
+    const location = inputs[3].value;
+    const password = inputs[4].value;
+    const confirmPassword = inputs[5].value;
 
     const accountType = form.querySelector(
         'input[name="accountType"]:checked'
@@ -2325,14 +2326,14 @@ function registerUser(event) {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            name,
-            email,
-            phone,
-            password,
-            accountType
-        })
-    })
+body: JSON.stringify({
+    name,
+    email,
+    phone,
+    location,
+    password,
+    accountType
+})    })
     .then(response => response.json())
     .then(data => {
         alert(data.message);
@@ -2861,4 +2862,251 @@ function editFarmerCrop(cropName, oldPrice, oldQuantity) {
         alert("Failed to update crop.");
 
     });
+}
+const profileBtn = document.getElementById("profileBtn");
+const profilePopup = document.getElementById("profilePopup");
+const closeProfile = document.getElementById("closeProfile");
+
+if (profileBtn && profilePopup) {
+
+    profileBtn.addEventListener("click", function() {
+        profilePopup.style.display = "block";
+    });
+
+}
+
+if (closeProfile && profilePopup) {
+
+    closeProfile.addEventListener("click", function() {
+        profilePopup.style.display = "none";
+    });
+
+}
+const profileUser =
+    JSON.parse(sessionStorage.getItem("loggedInUser"));
+
+if (profileUser) {
+
+    const profileName = document.getElementById("profileName");
+    const profileName2 = document.getElementById("profileName2");
+    const profileAccountType = document.getElementById("profileAccountType");
+    const profileEmail = document.getElementById("profileEmail");
+    const profilePhone = document.getElementById("profilePhone");
+    const profileLocation = document.getElementById("profileLocation");
+
+    if (profileName) {
+        profileName.textContent = profileUser.name || "User";
+    }
+
+    if (profileName2) {
+        profileName2.textContent = profileUser.name || "Not available";
+    }
+
+    if (profileAccountType) {
+        profileAccountType.textContent =
+            profileUser.accountType === "farmer"
+                ? "🌾 Farmer"
+                : "🛒 Buyer";
+    }
+
+    if (profileEmail) {
+        profileEmail.textContent =
+            profileUser.email || "Not available";
+    }
+
+    if (profilePhone) {
+        profilePhone.textContent =
+            profileUser.phone || "Not available";
+    }
+
+    if (profileLocation) {
+        profileLocation.textContent =
+            profileUser.location || "Not added";
+    }
+    const profileStats = document.getElementById("profileStats");
+
+if (profileStats && profileUser.accountType === "farmer") {
+
+    fetch(
+        "https://smart-farmer-fullstack.onrender.com/api/farmer-crops?email=" +
+        encodeURIComponent(profileUser.email)
+    )
+    .then(response => response.json())
+    .then(crops => {
+
+        const totalCrops = crops.length;
+
+        const totalQuantity = crops.reduce(
+            (sum, crop) => sum + Number(crop.quantity || 0),
+            0
+        );
+
+        const totalValue = crops.reduce(
+            (sum, crop) =>
+                sum + Number(crop.price || 0) * Number(crop.quantity || 0),
+            0
+        );
+
+        profileStats.innerHTML = `
+            🌱 Total Crops: ${totalCrops}<br>
+            📦 Total Quantity: ${totalQuantity}<br>
+            💰 Total Crop Value: ₹${totalValue.toLocaleString("en-IN")}
+        `;
+    })
+    .catch(error => {
+        console.log("Profile statistics error:", error);
+        profileStats.textContent = "Unable to load statistics";
+    });
+}
+if (profileStats && profileUser.accountType === "buyer") {
+
+    const orders =
+        JSON.parse(
+            localStorage.getItem(
+                "buyerOrders_" + profileUser.email
+            )
+        ) || [];
+
+    const totalOrders = orders.length;
+
+    const totalPurchase = orders.reduce(
+        (sum, order) =>
+            sum +
+            Number(order.price || 0) *
+            Number(order.quantity || 0),
+        0
+    );
+
+    profileStats.innerHTML = `
+        🛒 Total Orders: ${totalOrders}<br>
+        💰 Total Purchase Value: ₹${totalPurchase.toLocaleString("en-IN")}
+    `;
+}
+}
+const editProfileBtn =
+    document.getElementById("editProfileBtn");
+
+const editProfilePopup =
+    document.getElementById("editProfilePopup");
+
+const cancelEditBtn =
+    document.getElementById("cancelEditBtn");
+
+if (editProfileBtn && editProfilePopup) {
+
+   editProfileBtn.addEventListener("click", function() {
+
+    document.getElementById("editName").value =
+        profileUser.name || "";
+
+    document.getElementById("editPhone").value =
+        profileUser.phone || "";
+
+    document.getElementById("editLocation").value =
+        profileUser.location || "";
+
+    editProfilePopup.style.display = "block";
+
+});
+
+}
+
+if (cancelEditBtn && editProfilePopup) {
+
+    cancelEditBtn.addEventListener("click", function() {
+
+        editProfilePopup.style.display = "none";
+
+    });
+
+}
+const saveProfileBtn =
+    document.getElementById("saveProfileBtn");
+
+if (saveProfileBtn) {
+
+    saveProfileBtn.addEventListener("click", function() {
+
+        const newName =
+            document.getElementById("editName").value.trim();
+
+        const newPhone =
+            document.getElementById("editPhone").value.trim();
+
+        const newLocation =
+            document.getElementById("editLocation").value.trim();
+
+        if (!newName || !newPhone || !newLocation) {
+            alert("Please fill all fields.");
+            return;
+        } 
+
+        fetch(
+            "https://smart-farmer-fullstack.onrender.com/api/profile",
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: profileUser.email,
+                    name: newName,
+                    phone: newPhone,
+                    location: newLocation
+                })
+            }
+        )
+        .then(response => response.json())
+        .then(data => {
+
+            profileUser.name = newName;
+            profileUser.phone = newPhone;
+            profileUser.location = newLocation;
+
+            sessionStorage.setItem(
+                "loggedInUser",
+                JSON.stringify(profileUser)
+            );
+
+           const profileName2 =
+    document.getElementById("profileName2");
+
+if (profileName2) {
+    profileName2.textContent = newName;
+}
+const profileName =
+    document.getElementById("profileName");
+
+const profilePhone =
+    document.getElementById("profilePhone");
+
+const profileLocation =
+    document.getElementById("profileLocation");
+
+if (profileName) {
+    profileName.textContent = newName;
+}
+
+if (profilePhone) {
+    profilePhone.textContent = newPhone;
+}
+
+if (profileLocation) {
+    profileLocation.textContent = newLocation;
+}
+
+            alert(data.message);
+
+            editProfilePopup.style.display = "none";
+
+        })
+        .catch(error => {
+
+            console.log("Profile update error:", error);
+            alert("Profile update failed!");
+
+        });
+
+    });
+
 }
