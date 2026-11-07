@@ -1,5 +1,5 @@
 const express = require("express");
-
+const crypto = require("crypto");
 const app = express();
 const PORT = 5000;
 const crops = require("./crops");
@@ -36,7 +36,35 @@ app.get("/api/crops", (req, res) => {
     res.json(crops);
 });
 let users = [];
+// Admin Account
+const admin = {
+    name: "Smart Farmer Admin",
+    email: "admin@smartfarmer.com",
+    password: "Admin@123"
+};
+// Store active Admin tokens
+const adminTokens = new Set();
+// Admin Authentication Middleware
+function verifyAdmin(req, res, next) {
 
+    const token = req.headers.authorization;
+
+    if (!token || !token.startsWith("Bearer ")) {
+        return res.status(403).json({
+            message: "Admin access denied."
+        });
+    }
+
+    const actualToken = token.split(" ")[1];
+
+    if (!adminTokens.has(actualToken)) {
+        return res.status(403).json({
+            message: "Invalid Admin token."
+        });
+    }
+
+    next();
+}
 app.post("/api/register", (req, res) => {
     const { name, email, phone, location, password, accountType } = req.body;
 const existingUser = users.find(u => u.email === email);
@@ -61,8 +89,38 @@ if (existingUser) {
     });
 });
 app.post("/api/login", (req, res) => {
+
     const { email, password, accountType } = req.body;
 
+    // Admin Login
+    if (accountType === "admin") {
+
+    if (
+        email === admin.email &&
+        password === admin.password
+    ) {
+
+        const token = crypto.randomBytes(32).toString("hex");
+
+        adminTokens.add(token);
+
+        return res.json({
+            message: "Admin login successful!",
+            token: token,
+            user: {
+                name: admin.name,
+                email: admin.email,
+                accountType: "admin"
+            }
+        });
+    }
+
+        return res.status(401).json({
+            message: "Invalid admin credentials."
+        });
+    }
+
+    // Farmer and Buyer Login
     const user = users.find(
         u =>
             u.email === email &&
@@ -76,16 +134,17 @@ app.post("/api/login", (req, res) => {
         });
     }
 
-  res.json({
-    message: "Login successful! 🌾",
-    user: {
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        location: user.location,
-        accountType: user.accountType
-    }
-});
+    res.json({
+        message: "Login successful! 🌾",
+        user: {
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            location: user.location,
+            accountType: user.accountType
+        }
+    });
+
 });
 app.put("/api/profile", (req, res) => {
 
@@ -106,6 +165,29 @@ app.put("/api/profile", (req, res) => {
     res.json({
         message: "Profile updated successfully! 🌾"
     });
+});
+// Admin Dashboard Statistics
+app.get("/api/admin/stats", verifyAdmin, (req, res) => {
+
+    const totalUsers = users.length;
+
+    const totalFarmers = users.filter(
+        user => user.accountType === "farmer"
+    ).length;
+
+    const totalBuyers = users.filter(
+        user => user.accountType === "buyer"
+    ).length;
+
+    const totalCrops = crops.length + farmerCrops.length;
+
+    res.json({
+        totalUsers,
+        totalFarmers,
+        totalBuyers,
+        totalCrops
+    });
+
 });
 // Add Farmer Crop
 app.post("/api/crops", (req, res) => {
