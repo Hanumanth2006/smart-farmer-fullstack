@@ -194,6 +194,33 @@ app.get("/api/admin/users", verifyAdmin, (req, res) => {
     res.json(allUsers);
 
 });
+// Admin - Delete Registered User
+app.delete("/api/admin/users/:email", verifyAdmin, (req, res) => {
+    const email = req.params.email;
+
+    const userIndex = users.findIndex(user => user.email === email);
+
+    if (userIndex === -1) {
+        return res.status(404).json({
+            message: "User not found."
+        });
+    }
+
+    const deletedUser = users[userIndex];
+
+    users.splice(userIndex, 1);
+
+    // Remove crops belonging to the deleted farmer
+    if (deletedUser.accountType === "farmer") {
+        farmerCrops = farmerCrops.filter(
+            crop => crop.farmerEmail !== email
+        );
+    }
+
+    res.json({
+        message: "User deleted successfully!"
+    });
+});
 // Admin Dashboard Statistics
 app.get("/api/admin/stats", verifyAdmin, (req, res) => {
 
