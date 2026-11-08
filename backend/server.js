@@ -180,6 +180,20 @@ app.put("/api/profile", (req, res) => {
         message: "Profile updated successfully! 🌾"
     });
 });
+// Admin - Get All Registered Users
+app.get("/api/admin/users", verifyAdmin, (req, res) => {
+
+    const allUsers = users.map(user => ({
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        location: user.location,
+        accountType: user.accountType
+    }));
+
+    res.json(allUsers);
+
+});
 // Admin Dashboard Statistics
 app.get("/api/admin/stats", verifyAdmin, (req, res) => {
 
