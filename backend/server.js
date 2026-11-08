@@ -194,6 +194,30 @@ app.get("/api/admin/users", verifyAdmin, (req, res) => {
     res.json(allUsers);
 
 });
+// Admin - View All Farmer Crops
+app.get("/api/admin/crops", verifyAdmin, (req, res) => {
+    res.json(farmerCrops);
+});
+// Admin - Delete Farmer Crop
+app.delete("/api/admin/crops/:name/:farmerEmail", verifyAdmin, (req, res) => {
+    const { name, farmerEmail } = req.params;
+
+    const originalLength = farmerCrops.length;
+
+    farmerCrops = farmerCrops.filter(crop =>
+        !(crop.name === name && crop.farmerEmail === farmerEmail)
+    );
+
+    if (farmerCrops.length === originalLength) {
+        return res.status(404).json({
+            message: "Crop not found."
+        });
+    }
+
+    res.json({
+        message: "Crop deleted successfully!"
+    });
+});
 // Admin - Delete Registered User
 app.delete("/api/admin/users/:email", verifyAdmin, (req, res) => {
     const email = req.params.email;
