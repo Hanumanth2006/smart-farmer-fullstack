@@ -58,6 +58,20 @@ const admin = {
 };
 // Store active Admin tokens
 const adminTokens = new Set();
+// Admin Activity Logs
+let adminActivityLogs = [];
+
+// Store Activity
+function addAdminActivity(action, details) {
+    adminActivityLogs.unshift({
+        action: action,
+        details: details,
+        date: new Date().toLocaleString("en-IN")
+    });
+
+    // Keep latest 100 activities
+    adminActivityLogs = adminActivityLogs.slice(0, 100);
+}
 // Admin Authentication Middleware
 function verifyAdmin(req, res, next) {
 
@@ -117,6 +131,10 @@ app.post("/api/login", (req, res) => {
         const token = crypto.randomBytes(32).toString("hex");
 
         adminTokens.add(token);
+        addAdminActivity(
+    "Admin Login",
+    "Administrator logged into Smart Farmer"
+);
 
         return res.json({
             message: "Admin login successful!",
@@ -198,6 +216,10 @@ app.get("/api/admin/users", verifyAdmin, (req, res) => {
 app.get("/api/admin/crops", verifyAdmin, (req, res) => {
     res.json(farmerCrops);
 });
+// Admin - Get Activity Logs
+app.get("/api/admin/activity", verifyAdmin, (req, res) => {
+    res.json(adminActivityLogs);
+});
 // Admin - Delete Farmer Crop
 app.delete("/api/admin/crops/:name/:farmerEmail", verifyAdmin, (req, res) => {
     const { name, farmerEmail } = req.params;
@@ -213,6 +235,10 @@ app.delete("/api/admin/crops/:name/:farmerEmail", verifyAdmin, (req, res) => {
             message: "Crop not found."
         });
     }
+    addAdminActivity(
+    "Crop Deleted",
+    `Deleted crop: ${name} by farmer: ${farmerEmail}`
+);
 
     res.json({
         message: "Crop deleted successfully!"
@@ -233,6 +259,10 @@ app.delete("/api/admin/users/:email", verifyAdmin, (req, res) => {
     const deletedUser = users[userIndex];
 
     users.splice(userIndex, 1);
+    addAdminActivity(
+    "User Deleted",
+    `Deleted ${deletedUser.accountType}: ${deletedUser.name} (${email})`
+);
 
     // Remove crops belonging to the deleted farmer
     if (deletedUser.accountType === "farmer") {
